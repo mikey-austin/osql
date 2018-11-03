@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+package orders;
+
+option java_package = "net.jackiemclean.osql";
+option java_outer_classname = "OrderProto";
+
+message Order {
+    string id = 1;
+
+    message Item {
+        string id = 1;
+        double price = 2;
+        uint64 qty = 3;
+    }
+    repeated Item items = 2;
+}
