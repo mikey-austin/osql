@@ -28,7 +28,7 @@ world
     ;
 
 setStatements
-    : setStatement (',' EOL* setStatement)*
+    : EOL* setStatement (',' EOL* setStatement)* EOL*
     ;
 
 setStatement
@@ -53,13 +53,13 @@ updateWhere
     ;
 
 orderClause
-    : 'orderId' '=' UUID
-    | 'orderId' 'IN' uuidList
+    : 'orderId' '=' UUID      # orderIdSingle
+    | 'orderId' 'IN' uuidList # orderIdList
     ;
 
 orderObjectClause
-    : 'orderObjectId' '=' UUID
-    | 'orderObjectId' 'IN' uuidList
+    : 'orderObjectId' '=' UUID      # orderObjectIdSingle
+    | 'orderObjectId' 'IN' uuidList # orderObjectIdList
     ;
 
 uuidList

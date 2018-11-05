@@ -1,0 +1,7 @@
+# Build the protobuf test sources:
+
+    protoc -I src/test/proto/ --java_out=src/test/java/ order.proto
+
+# Then build and run the tests
+
+    mvn clean test
