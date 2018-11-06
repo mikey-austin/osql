@@ -27,12 +27,28 @@ public class IR {
         Set<UUID> orderIds,
         Set<UUID> orderObjectIds) {
       this.worldName = worldName;
-      this.assignments = assignments;
-      this.orderIds = orderIds;
-      this.orderObjectIds = orderObjectIds;
+      this.assignments = Collections.unmodifiableSet(assignments);
+      this.orderIds = Collections.unmodifiableSet(orderIds);
+      this.orderObjectIds = Collections.unmodifiableSet(orderObjectIds);
     }
 
-    public static class Assignment {}
+    public static class Assignment {
+      private Field field;
+      private String expr; // TODO: this won't remain a string.
+
+      public Assignment(Field field, String expr) {
+        this.field = field;
+        this.expr = expr;
+      }
+
+      public Field getField() {
+        return field;
+      }
+
+      public String getExpr() {
+        return expr;
+      }
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -60,6 +76,19 @@ public class IR {
           "  orderIds: " + orderIds,
           "  orderObjectIds: " + orderObjectIds,
           ")");
+    }
+  }
+
+  // Common class to update and select statements.
+  public static class Field {
+    private final List<String> path;
+
+    public Field(List<String> path) {
+      this.path = Collections.unmodifiableList(path);
+    }
+
+    public List<String> getPath() {
+      return path;
     }
   }
 

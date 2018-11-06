@@ -1,0 +1,18 @@
+
+updateStmt(expressions) ::= <<
+(fn [obj]
+ <expressions:setter()>)
+>>
+
+setter(expr) ::= <<
+(<expr.field()>
+ <getter(expr.child())>
+ <expr.value()>)
+>>
+
+getter(child) ::= <<
+<if(child.hasChild())>(child.field()
+ <getter(child.child())>)
+<else>(<child.field()> obj)
+<endif>
+>>
