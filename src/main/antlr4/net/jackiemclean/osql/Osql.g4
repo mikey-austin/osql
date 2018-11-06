@@ -36,7 +36,7 @@ setStatement
     ;
 
 fieldPath
-    : SYMBOL ('.' fieldPath)*
+    : SYMBOL ('.' SYMBOL)*
     ;
 
 // TODO: add more sophisticated types and function calls below.

@@ -1,5 +1,7 @@
 package net.jackiemclean.osql;
 
+import static java.util.stream.Collectors.toList;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -71,6 +73,25 @@ public class OsqlIRBuilder {
       IR.UpdateStmt updateStmt =
           new IR.UpdateStmt(worldName, assignments, orderIds, orderObjectIds);
       statements.add(updateStmt);
+    }
+
+    @Override
+    public void exitSetStatement(@NotNull OsqlParser.SetStatementContext ctx) {
+      List<String> fieldPath =
+          ctx.fieldPath().SYMBOL().stream().map(TerminalNode::getText).collect(toList());
+      IR.Field field = new IR.Field(fieldPath);
+
+      // TODO: these will not be strings in the future.
+      String expr = "";
+      if (ctx.fieldExpr() instanceof OsqlParser.StrFieldExprContext) {
+        expr = ((OsqlParser.StrFieldExprContext) ctx.fieldExpr()).STRING().getText();
+      } else if (ctx.fieldExpr() instanceof OsqlParser.IntFieldExprContext) {
+        expr = ((OsqlParser.IntFieldExprContext) ctx.fieldExpr()).INTEGER().getText();
+      } else if (ctx.fieldExpr() instanceof OsqlParser.UuidFieldExprContext) {
+        expr = ((OsqlParser.UuidFieldExprContext) ctx.fieldExpr()).UUID().getText();
+      }
+
+      assignments.add(new IR.UpdateStmt.Assignment(field, expr));
     }
 
     @Override

@@ -48,6 +48,23 @@ public class IR {
       public String getExpr() {
         return expr;
       }
+
+      @Override
+      public boolean equals(Object o) {
+        if (o == null || !(o instanceof Assignment)) return false;
+        if (o == this) return true;
+        return Objects.equals(field, ((Assignment) o).field);
+      }
+
+      @Override
+      public int hashCode() {
+        return Objects.hash(field);
+      }
+
+      @Override
+      public String toString() {
+        return field + " = " + expr;
+      }
     }
 
     @Override
@@ -89,6 +106,23 @@ public class IR {
 
     public List<String> getPath() {
       return path;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+      if (o == null || !(o instanceof Field)) return false;
+      if (o == this) return true;
+      return Objects.equals(path, ((Field) o).path);
+    }
+
+    @Override
+    public int hashCode() {
+      return Objects.hash(path);
+    }
+
+    @Override
+    public String toString() {
+      return String.join(".", path);
     }
   }
 
