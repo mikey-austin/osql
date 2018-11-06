@@ -1,18 +1,16 @@
 
-updateStmt(expressions) ::= <<
+updateStmt(assignments) ::= <<
 (fn [obj]
- <expressions:setter()>)
+ <assignments:setter()>)
 >>
 
-setter(expr) ::= <<
-(<expr.field()>
- <getter(expr.child())>
- <expr.value()>)
+setter(a) ::= <<
+ (<a.field> <getter(a.child)> <a.value>)
+
 >>
 
-getter(child) ::= <<
-<if(child.hasChild())>(child.field()
- <getter(child.child())>)
-<else>(<child.field()> obj)
+getter(child) ::= <%
+<if(child.child)>(<child.field> <getter(child.child)>)
+<else>(<child.field> obj)
 <endif>
->>
+%>

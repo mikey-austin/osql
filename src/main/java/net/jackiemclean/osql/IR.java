@@ -13,6 +13,10 @@ public class IR {
     this.statements = Collections.unmodifiableList(statements);
   }
 
+  public List<Stmt> getStatements() {
+    return statements;
+  }
+
   public static interface Stmt {}
 
   public static class UpdateStmt implements Stmt {
@@ -30,6 +34,10 @@ public class IR {
       this.assignments = Collections.unmodifiableSet(assignments);
       this.orderIds = Collections.unmodifiableSet(orderIds);
       this.orderObjectIds = Collections.unmodifiableSet(orderObjectIds);
+    }
+
+    public Set<Assignment> getAssignments() {
+      return assignments;
     }
 
     public static class Assignment {
